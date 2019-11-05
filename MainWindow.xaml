@@ -1,0 +1,40 @@
+﻿<Window x:Class="Personas.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Personas"
+        mc:Ignorable="d"
+        Title="Personas" Height="450" Width="800" Icon="32.ico">
+    <Window.Resources>
+        <Style TargetType="{x:Type Image}" x:Key="sexo">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Sexo}" Value="Hombre">
+                    <Setter Property="Source" Value="hombre.png" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Sexo}" Value="Mujer">
+                    <Setter Property="Source" Value="mujer.png" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <DataTemplate DataType="{x:Type local:Persona}">
+            <StackPanel Orientation = "Horizontal" Margin = "2" Width="200">
+                <Ellipse Height="40" Width="40" Margin="2,0,0,0" VerticalAlignment="Center">
+                    <Ellipse.Fill>
+                        <ImageBrush ImageSource="{Binding Foto}"/>
+                    </Ellipse.Fill>
+                </Ellipse>
+                <TextBlock Text="{Binding Nombre}" Margin="5,0,0,0" VerticalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+                <Image Style="{StaticResource sexo}" VerticalAlignment="Center" Margin="5,0,0,0"/>
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
+    <StackPanel>
+        <ComboBox x:Name="PersonasComboBox" ItemsSource="{Binding}" Height="40" Width="200" Margin ="20" SelectedValuePath="Id"/>
+        <TextBlock>
+            <Run>El identificador del usuario seleccionado es: </Run>
+            <Run FontWeight="Bold" Text="{Binding ElementName=PersonasComboBox,Path=SelectedValue}"></Run>
+        </TextBlock>
+    </StackPanel>
+</Window>
